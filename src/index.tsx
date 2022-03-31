@@ -4,7 +4,7 @@ import React from 'react';
 
 import {ThemeProvider} from 'styled-components';
 
-import colors from './global/styles/colors';
+import theme from './global/styles/colors';
 
 import App from './App';
 
@@ -14,8 +14,8 @@ LogBox.ignoreLogs([
 
 const index: React.FC = () => {
   return (
-      <ThemeProvider theme={colors}>        
-        <StatusBar barStyle="dark-content" backgroundColor={colors.statusBar} />
+      <ThemeProvider theme={theme}>        
+        <StatusBar barStyle="dark-content" backgroundColor={theme.colors.primary} />
         <App />
       </ThemeProvider>
   );

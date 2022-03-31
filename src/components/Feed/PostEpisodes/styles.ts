@@ -3,6 +3,7 @@ import colors from '../../../global/styles/colors';
 
 export const Container = styled.View`
    padding: 10px;
+
 `;
 
 export const ContainerPost = styled.TouchableOpacity`
@@ -11,7 +12,7 @@ export const ContainerPost = styled.TouchableOpacity`
   align-items: center;
 
   border: 0.2px;
-  border-radius: 20px;
+  border-radius: 10px;
 
   background-color: ${({theme}) => theme.colors.primary};
 
@@ -32,6 +33,8 @@ export const ContainerStatus = styled.View`
 export const Name = styled.Text`
   font-size: 24px;
   font-weight: bold;
+
+  color: ${({theme}) => theme.colors.text};
 
 `;
 
@@ -67,10 +70,14 @@ export const ContainerInfo = styled.View`
 export const TitleInfo = styled.Text`
   font-size: 14px;
   font-weight: bold;
+
+  color: ${({theme}) => theme.colors.text};
 `;
 
 export const TextInfo = styled.Text`
   font-size: 14px;
 
   margin-left: 5px;
+
+  color: ${({theme}) => theme.colors.text};
 `;

@@ -5,7 +5,11 @@ import RNPickerSelect from 'react-native-picker-select';
 
 import { Container } from './styles';
 
-const PickerFilter: React.FC = () => {
+interface pickerProps {
+  setOrder: (value: string) => void;
+}
+
+const PickerFilter: React.FC<pickerProps> = ({setOrder}) => {
   const filter = useRef();
   
   const [selectFilter, setSelectFilter] = useState(null);
@@ -16,22 +20,25 @@ const PickerFilter: React.FC = () => {
             placeholder={{
               label: 'Ordenar por: ',
               value: null,
-              color: 'black',
+              color: '#fff',
             }} 
-            onValueChange={value => {setSelectFilter(value)}}
+            onValueChange={value => {
+              setOrder(value);
+              setSelectFilter(value);
+            }}            
             style={pickerSelectStyles}
+            useNativeAndroidPickerStyle={false}
             value={selectFilter}
             ref={el => {
               filter;
             }}
-       
             items={[
                 { label: 'Nome', value: 'name' },
                 { label: 'Status', value: 'status' },
-                { label: 'Data', value: 'date' },
+                { label: 'Espécie', value: 'species' },
             ]}
         />
-        {selectFilter !== null && (<Icon name={'keyboard-arrow-down'} size={20} color="#000" />)}
+        <Icon name={'keyboard-arrow-down'} size={20} color="#000" />
     </Container>
   );
 }
@@ -41,15 +48,23 @@ const pickerSelectStyles = StyleSheet.create({
     fontSize: 18,
     paddingVertical: 12,
     paddingHorizontal: 10,
-    color: 'black',
+    color: '#000',
     paddingRight: 10, 
   },
   inputAndroid: {
-    fontSize: 18,
+    fontSize: 16,
     paddingHorizontal: 10,
     paddingVertical: 8,
-    color: 'black',
     paddingRight: 10, 
+    color: '#000',
+    width: 170,
+    maxWidth: 170,    
+  },
+  placeholder: {
+    color: '#000',
+  },
+  done: {
+    color: '#000',
   },
 });
 

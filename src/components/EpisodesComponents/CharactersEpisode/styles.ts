@@ -9,6 +9,8 @@ export const Title = styled.Text`
 
   font-size: 20px;
   font-weight: bold;
+
+  color: ${({theme}) => theme.colors.text};
 `;
 
 export const ContainerCharacters = styled.View`
@@ -49,5 +51,6 @@ export const NameCharacter = styled.Text`
   font-size: 18px;
   font-weight: bold;
 
+  color: ${({theme}) => theme.colors.text};
 `;
 1

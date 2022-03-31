@@ -2,7 +2,11 @@ import styled from 'styled-components/native';
 import colors from '../../../global/styles/colors';
 
 export const Container = styled.View`
-   padding: 10px;
+  padding: 10px;
+
+  width: 100%;
+  height: 100%;
+
 `;
 
 export const ContainerPost = styled.TouchableOpacity`
@@ -10,13 +14,14 @@ export const ContainerPost = styled.TouchableOpacity`
   justify-content: space-between;
   align-items: center;
 
-  border: 0.2px;
   border-radius: 20px;
 
   background-color: ${({theme}) => theme.colors.primary};
 
-  height: 200px;
+  height: 250px;
   width: 100%;
+
+  margin-bottom: 30px;
 `;
 
 export const ContainerStatus = styled.View`
@@ -25,7 +30,7 @@ export const ContainerStatus = styled.View`
   align-items: center;
 
   height: auto;
-  width: 100px;
+  width: 180px;
 `;
 
 export const ContainerTitlePost = styled.View`
@@ -37,8 +42,8 @@ export const ContainerTitlePost = styled.View`
 `;
 
 export const ImagePost = styled.Image`
-  width: 185px;
-  height: 100%;
+  width: 175px;
+  height: 250px;
 
   border-radius: 20px;
 `;
@@ -47,6 +52,7 @@ export const Name = styled.Text`
   font-size: 24px;
   font-weight: bold;
 
+  color: ${({theme}) => theme.colors.text};
 `;
 
 export const ContainerInfoPost = styled.View`
@@ -54,8 +60,8 @@ export const ContainerInfoPost = styled.View`
   justify-content: space-around;
   align-items: flex-start;
 
-  width: 170px;
-  height: 200px;
+  width: 185px;
+  height: 250px;
 
 `;
 
@@ -76,10 +82,14 @@ export const ContainerInfo = styled.View`
 export const TitleInfo = styled.Text`
   font-size: 14px;
   font-weight: bold;
+
+  color: ${({theme}) => theme.colors.text};
 `;
 
 export const TextInfo = styled.Text`
   font-size: 14px;
 
   margin-left: 5px;
+
+  color: ${({theme}) => theme.colors.text};
 `;

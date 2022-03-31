@@ -22,6 +22,8 @@ export const TitleHeader = styled.Text`
   font-weight: bold;
 
   padding: 20px;
+
+  color: ${({theme}) => theme.colors.text};
 `;
 
 export const ContainerInput = styled.View`

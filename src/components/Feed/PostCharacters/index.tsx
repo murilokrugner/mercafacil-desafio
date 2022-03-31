@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { FlatList } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import { client } from '../../../config/client-graphql';
-import { gql } from '@apollo/client';
 
 import { 
     Container, 
@@ -20,70 +18,167 @@ import {
 
 import rick from '../../../assets/rick.jpeg';
 
-const PostCharacters: React.FC = () => {
-  const navigation = useNavigation();
+import api from '../../../services/api';
+import listAllCharacters from '../../../queries/queryCharacter/listAllCharacters';
+import {orderName, orderStatus, orderSpecies} from '../../../functions/orderArray';
+import Loading from '../../Loading';
 
-  const [datas, setDatas] = useState(null);
+interface dataCharacters {
+    data: {
+      characters: {
+        info: {
+          count: number;
+        },
+        results: [
+          {
+            id: number;
+            name: string;
+            status: string;
+            species: string;
+            image: string;
+            location: {
+              name: string;
+            };
+            episode: [
+              {
+                name: string;
+              }
+            ]
+          },
+        ]
+      }
+    }
+}
+
+interface dataItemCharacter {
+    id: number;
+    name: string;
+    status: string;
+    species: string;
+    image: string;
+    location: {
+      name: string;
+    };
+    episode: [
+      {
+        name: string;
+      }
+    ]
+}
+
+interface PostCharactersProps {
+  order: string;
+  search: string;
+}
+
+const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
+  const navigation = useNavigation();
+  const [datas, setDatas] = useState<dataItemCharacter[]>([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   async function loadCharacters() {
-      try {
-        client.query({
-            query: gql`
-                query {
-                    characters(page: 2, filter: { name: "rick" }) {
-                    info {
-                        count
-                    }
-                    results {
-                        name
-                    }
-                    }
-                    location(id: 1) {
-                    id
-                    }
-                    episodesByIds(ids: [1, 2]) {
-                    id
-                  }
-                }
-            `,
-        }).then(res => console.log(res));
-      } catch (error) {
-          
+      try {        
+         const response: dataCharacters = await api(listAllCharacters(page, null));         
+
+         setDatas(oldState => [...oldState, response.data.characters.results[0]]);
+
+         setLoading(false);
+        } catch (error) {          
+         setLoading(false);
       }
+  }
+
+  async function loadCharactersSearch() {
+    try {     
+      
+       const response: dataCharacters = await api(listAllCharacters(null, `"${search}"`));
+
+       setDatas(response.data.characters.results);
+
+      } catch (error) {          
+
+    }
+  }
+
+  function orderData() {
+    let data = datas;
+
+    switch (order) {
+      case 'name':
+        setDatas(data.sort(orderName));
+        break;
+      case 'status':
+        setDatas(data.sort(orderStatus));
+        break
+      case 'species':
+        setDatas(data.sort(orderSpecies));
+        break;
+      default: 
+    }
+  }
+
+  function loadPage() {
+    setPage(page + 1);
   }
   
   useEffect(() => {
-    loadCharacters();
-  }, []);
+    if (search !== null) {
+      loadCharactersSearch();
+    } else {
+      loadCharacters();
+    }
 
+  }, [page, search]);
+
+  useEffect(() => {
+    if (order !== null) {
+      orderData();
+    }
+  }, [order]);
+  
   return (
       <Container>
-        <ContainerPost onPress={() => {navigation.navigate('ViewCharacter')}}>
-            <ContainerTitlePost>
-                <ImagePost source={rick}/>
-            </ContainerTitlePost>
-
-            <ContainerInfoPost>                
-                <ContainerName>
-                    <Name>Rick</Name>
-
-                    <ContainerStatus>
-                        <TextInfo>Alive - Alien</TextInfo>
-                    </ContainerStatus>
-                </ContainerName>
-
-                <ContainerInfo>
-                    <TitleInfo>Last known location:</TitleInfo>
-                    <TextInfo>Nuptia 4</TextInfo>
-                </ContainerInfo>
-
-                <ContainerInfo>
-                    <TitleInfo>First seen in:</TitleInfo>
-                    <TextInfo>Mortynight Run</TextInfo>
-                </ContainerInfo>
-
-            </ContainerInfoPost>
-        </ContainerPost>
+          {loading ? (
+              <Loading color="#000" size="large" />
+          ) : (
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                data={datas}          
+                onEndReached={loadPage}
+                onEndReachedThreshold={5}   
+                style={{flex: 1}}
+                keyExtractor={(item) => String(item.id)}
+                renderItem={({item, index}) => (
+                <ContainerPost onPress={() => {navigation.navigate('ViewCharacter')}}>
+                    <ContainerTitlePost>
+                        <ImagePost source={{uri: item.image}}/>
+                    </ContainerTitlePost>
+    
+                    <ContainerInfoPost>                
+                        <ContainerName>
+                            <Name>{item.name}</Name>
+    
+                            <ContainerStatus>
+                                <TextInfo>{item.status} - {item.species}</TextInfo>
+                            </ContainerStatus>
+                        </ContainerName>
+    
+                        <ContainerInfo>
+                            <TitleInfo>Last known location:</TitleInfo>
+                            <TextInfo>{item.location.name}</TextInfo>
+                        </ContainerInfo>
+    
+                        <ContainerInfo>
+                            <TitleInfo>First seen in:</TitleInfo>
+                            <TextInfo>{item.episode[0].name}</TextInfo>
+                        </ContainerInfo>
+    
+                    </ContainerInfoPost>
+                </ContainerPost>
+                )}
+            />
+          )}        
       </Container>
   );
 }

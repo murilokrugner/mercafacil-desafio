@@ -26,7 +26,7 @@ export const ContainerInfoCharacter = styled.View`
   align-items: flex-start;
 
   width: auto;
-  height: 40px;
+  height: 60px;
 `;
 
 export const NameCharacter = styled.Text`
@@ -35,11 +35,15 @@ export const NameCharacter = styled.Text`
 
   margin-top: 20px;
   margin-left: 20px;
+
+  color: ${({theme}) => theme.colors.text};
 `;
 
 export const TitleInfoCharacter = styled.Text`
   font-size: 18px;
   margin-left: 20px;
+
+  color: ${({theme}) => theme.colors.text};
 `;
 
 export const TextInfoCharacter = styled.Text`
@@ -47,4 +51,6 @@ export const TextInfoCharacter = styled.Text`
 
   margin-top: 20px;
   margin-left: 25px;
+
+  color: ${({theme}) => theme.colors.text};
 `;

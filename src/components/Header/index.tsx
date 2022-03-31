@@ -5,14 +5,16 @@ import PickerFilter from '../Search/PickerFilter';
 
 interface HeaderProps {
     title: string;
+    setOrder: () => void;
+    setSearch: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({title}) => {
+const Header: React.FC<HeaderProps> = ({title, setOrder, setSearch}) => {
   return (
       <Container>
           <ContainerHeader>
             <TitleHeader>{title}</TitleHeader>
-            <PickerFilter />
+            <PickerFilter setOrder={setOrder} />
           </ContainerHeader>
 
           <ContainerInput>
@@ -22,6 +24,7 @@ const Header: React.FC<HeaderProps> = ({title}) => {
               autoCapitalize="none"
               placeholder="Pesquisa"
               returnKeyType="next"
+              setSearch={setSearch}
             />
           </ContainerInput>
           

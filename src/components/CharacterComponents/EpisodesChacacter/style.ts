@@ -6,6 +6,8 @@ export const TitleEpisodes = styled.Text`
 
   margin-top: 40px;
   margin-left: 20px;
+
+  color: ${({theme}) => theme.colors.text};
 `;
 
 export const ContainerEpisodes = styled.View`
