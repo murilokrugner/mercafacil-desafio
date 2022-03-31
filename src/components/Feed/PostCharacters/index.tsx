@@ -22,7 +22,6 @@ import api from '../../../services/api';
 import listAllCharacters from '../../../queries/queryCharacter/listAllCharacters';
 import {orderName, orderStatus, orderSpecies} from '../../../functions/orderArray';
 import Loading from '../../Loading';
-
 interface dataCharacters {
     data: {
       characters: {
@@ -41,6 +40,7 @@ interface dataCharacters {
             };
             episode: [
               {
+                id: number,
                 name: string;
               }
             ]
@@ -61,6 +61,7 @@ interface dataItemCharacter {
     };
     episode: [
       {
+        id: number,
         name: string;
       }
     ]
@@ -76,16 +77,25 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
   const [datas, setDatas] = useState<dataItemCharacter[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [loadingData, setLoadingData] = useState(false);
 
   async function loadCharacters() {
-      try {        
+      if (loadingData) {
+        return;
+      }
+
+      try {   
+         setLoadingData(true);
+
          const response: dataCharacters = await api(listAllCharacters(page, null));         
 
-         setDatas(oldState => [...oldState, response.data.characters.results[0]]);
+         setDatas([...datas, ...response.data.characters.results]);
 
          setLoading(false);
+         setLoadingData(false);
         } catch (error) {          
-         setLoading(false);
+          setLoading(false);
+          setLoadingData(false);
       }
   }
 
@@ -123,12 +133,13 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
   }
   
   useEffect(() => {
-    if (search !== null) {
+    if (search.length !== 0) {
       loadCharactersSearch();
     } else {
       loadCharacters();
     }
 
+    return () => {}
   }, [page, search]);
 
   useEffect(() => {
@@ -150,7 +161,7 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
                 style={{flex: 1}}
                 keyExtractor={(item) => String(item.id)}
                 renderItem={({item, index}) => (
-                <ContainerPost onPress={() => {navigation.navigate('ViewCharacter')}}>
+                <ContainerPost onPress={() => {navigation.navigate('ViewCharacter', item)}}>
                     <ContainerTitlePost>
                         <ImagePost source={{uri: item.image}}/>
                     </ContainerTitlePost>

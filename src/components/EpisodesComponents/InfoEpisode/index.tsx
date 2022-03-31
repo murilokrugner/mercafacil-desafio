@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import { 
     Container,
@@ -11,21 +11,40 @@ import {
 
 import CharactersEpisode from '../CharactersEpisode';
 import Line from '../../Line';
+import { useRoute } from '@react-navigation/native';
+interface dataItemEpisodes {
+    id: number;
+    name: string;
+    air_date: string;
+    episode: string;
+    characters: {
+      id: number;
+      name: string;
+      image: string;
+    }
+}
+
 
 const InfoEpisode: React.FC = () => {
+  const route = useRoute();
+
+  const data: dataItemEpisodes | any = route.params;
+
   return (
-      <Container>
-          <ContainerNameEpisode>
-              <CodeEpisode>5s5s</CodeEpisode>
-              <NameEpisode>Nome do episodio</NameEpisode>
-          </ContainerNameEpisode>
-              
-          <DateEpisode>No ar: 20/12/2021</DateEpisode>
+      <ScrollView>
+          <Container>
+            <ContainerNameEpisode>
+                <NameEpisode>{data.name}</NameEpisode>
+                <CodeEpisode>{data.episode}</CodeEpisode>
+            </ContainerNameEpisode>
+                
+            <DateEpisode>No ar: {data.air_date}</DateEpisode>
 
-          <Line />
+            <Line />
 
-          <CharactersEpisode />
-      </Container>
+            <CharactersEpisode characters={data.characters}/>
+        </Container>
+      </ScrollView>      
   );
 }
 

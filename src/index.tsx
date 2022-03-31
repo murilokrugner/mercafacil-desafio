@@ -12,6 +12,8 @@ LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
 ]);
 
+import './config/ReactotronConfig';
+
 const index: React.FC = () => {
   return (
       <ThemeProvider theme={theme}>        

@@ -9,5 +9,5 @@ export const Container = styled.View`
   flex-direction: column;
   justify-content: space-between;
 
-  margin-bottom: ${windowHeight - 600 + 'px'};
+  margin-bottom: ${windowHeight - 700 + 'px'};
 `;

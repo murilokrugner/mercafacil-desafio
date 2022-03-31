@@ -10,15 +10,26 @@ import {
 
 import generateRandomColor from '../../../functions/generateRandomColor';
 
-const EpisodesChacacter: React.FC = () => {
+interface episodesProps {
+  episodes: [
+    {
+      id: number;
+      name: string;
+    }
+  ]
+}
+
+const EpisodesChacacter: React.FC<episodesProps> = ({episodes}) => {
   return (
       <>
         <TitleEpisodes>Episódios: </TitleEpisodes>
-
+      
         <ContainerEpisodes>
-        <Episode color={generateRandomColor()}>
-            <NameEpisode>Ep 1 soe</NameEpisode>
-        </Episode>
+          {episodes.map(item => (
+              <Episode key={item.id} color={generateRandomColor()}>
+                  <NameEpisode>{item.name}</NameEpisode>
+              </Episode>
+          ))}  
         </ContainerEpisodes>
       </>
   );

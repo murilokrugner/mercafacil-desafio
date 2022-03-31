@@ -7,7 +7,7 @@ export const Container = styled.View`
 
 export const ContainerNameEpisode = styled.View`
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 
   width: 100%;
@@ -17,7 +17,7 @@ export const ContainerNameEpisode = styled.View`
 `;
 
 export const NameEpisode = styled.Text`
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
 
   color: ${({theme}) => theme.colors.text};
@@ -33,5 +33,5 @@ export const DateEpisode = styled.Text`
 
 export const CodeEpisode = styled.Text`
   color: ${({theme}) => theme.colors.text};
-  font-size: 20px;
+  font-size: 16px;
 `;

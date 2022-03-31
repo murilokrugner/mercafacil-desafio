@@ -4,6 +4,8 @@ import colors from '../../../global/styles/colors';
 export const Container = styled.View`
    padding: 10px;
 
+   width: 100%;
+   height: 100%;
 `;
 
 export const ContainerPost = styled.TouchableOpacity`
@@ -11,13 +13,14 @@ export const ContainerPost = styled.TouchableOpacity`
   justify-content: space-between;
   align-items: center;
 
-  border: 0.2px;
-  border-radius: 10px;
+  border-radius: 20px;
 
   background-color: ${({theme}) => theme.colors.primary};
 
   height: 100px;
   width: 100%;
+
+  margin-bottom: 30px;
 
 `;
 
@@ -31,7 +34,7 @@ export const ContainerStatus = styled.View`
 `;
 
 export const Name = styled.Text`
-  font-size: 24px;
+  font-size: 17px;
   font-weight: bold;
 
   color: ${({theme}) => theme.colors.text};
@@ -53,7 +56,9 @@ export const ContainerName = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   width: 320px;
+  max-width: 320px;
   height: 32px;
 
 `;

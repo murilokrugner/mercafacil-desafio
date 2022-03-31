@@ -15,6 +15,7 @@ function listAllCharacters(page: number | null, search: string | null) {
             name,
           },
           episode {
+            id,
             name,
           }
         }

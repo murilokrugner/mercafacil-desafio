@@ -15,30 +15,53 @@ import {
 } from './styles';
 
 import EpisodesChacacter from '../EpisodesChacacter';
+import { useRoute } from '@react-navigation/native';
+
+interface dataItemCharacter {
+  id: number;
+  name: string;
+  status: string;
+  species: string;
+  image: string;
+  location: {
+    name: string;
+  };
+  episode: [
+    {
+      id: number,
+      name: string;
+    }
+  ]
+}
+
 
 const InfoCharacter: React.FC = () => {
+  const route = useRoute();
+
+  const data: dataItemCharacter | any = route.params;
+
   return (
     <ScrollView style={{height: '100%'}}>
       <Container>
-          <ImageCharacter source={Rick} />
+          <ImageCharacter source={{uri: data.image}} />
                     
             <ContainerNameCharacter>
-              <NameCharacter>Rick</NameCharacter>
+              <NameCharacter>{data.name}</NameCharacter>
 
               <TextInfoCharacter>Alive - Alien</TextInfoCharacter>
             </ContainerNameCharacter>
 
             <ContainerInfoCharacter>
               <TitleInfoCharacter>Last known location:</TitleInfoCharacter>
-              <TextInfoCharacter>Citadel of Ricks</TextInfoCharacter>
+              <TextInfoCharacter>{data.location.name}</TextInfoCharacter>
             </ContainerInfoCharacter>
 
             <ContainerInfoCharacter>
               <TitleInfoCharacter>Last known location:</TitleInfoCharacter>
-              <TextInfoCharacter>Citadel of Ricks</TextInfoCharacter>
+              <TextInfoCharacter>{data.episode[0].name}</TextInfoCharacter>
             </ContainerInfoCharacter>
 
-            <EpisodesChacacter />
+            <EpisodesChacacter episodes={data.episode}/>
           </Container>
       </ScrollView>
   );

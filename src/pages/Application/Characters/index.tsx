@@ -7,7 +7,7 @@ import PostCharacters from '../../../components/Feed/PostCharacters';
 
 const Characters: React.FC = () => {
   const [order, setOrder] = useState(null);
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState('');
 
   return (
       <Container>

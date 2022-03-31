@@ -1,5 +1,4 @@
 import React from 'react';
-import Rick from '../../../assets/rick.jpeg';
 
 import { 
     Container, 
@@ -10,28 +9,26 @@ import {
     NameCharacter 
 } from './styles';
 
-const CharactersEpisode: React.FC = () => {
+interface charactersProps {
+    characters: {
+        id: number;
+        name: string;
+        image: string;        
+    }
+}
+
+const CharactersEpisode: React.FC<charactersProps> = ({characters}) => {
   return (
       <Container>
           <Title>Personagens do episódio: </Title>
 
           <ContainerCharacters>
-              <Character>
-                  <ImageCharacter source={Rick}/>
-                  <NameCharacter>Rick</NameCharacter>
-              </Character>
-              <Character>
-                  <ImageCharacter source={Rick}/>
-                  <NameCharacter>Rick</NameCharacter>
-              </Character>
-              <Character>
-                  <ImageCharacter source={Rick}/>
-                  <NameCharacter>Rick</NameCharacter>
-              </Character>
-              <Character>
-                  <ImageCharacter source={Rick}/>
-                  <NameCharacter>Rick</NameCharacter>
-              </Character>
+              {characters.map(item => (
+                  <Character key={item.id}>
+                    <ImageCharacter source={{uri: item.image}}/>
+                    <NameCharacter>{item.name}</NameCharacter>
+                </Character>
+              ))}
           </ContainerCharacters>
       </Container>
   );

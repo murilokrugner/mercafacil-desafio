@@ -25,14 +25,15 @@ export const Episode = styled.View`
   justify-content: center;
   align-items: center;
 
-  width: 120px;
-  height: 50px;
-  background-color: ${props => props.color}
+  width: auto;
+  height: auto;
+  background-color: ${props => props.color};
   border: 1px;
 
   border-radius: 50px;
-
   margin-bottom: 20px;
+
+  padding: 10px;
 
 `;
 
