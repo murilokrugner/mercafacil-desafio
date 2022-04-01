@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import fonts from '../../../global/styles/fonts';
 
 export const Container = styled.View`
   width: 100%;
@@ -19,13 +20,13 @@ export const ContainerNameEpisode = styled.View`
 export const NameEpisode = styled.Text`
   font-size: 22px;
   font-weight: bold;
-
+  font-family: ${fonts.bold};
   color: ${({theme}) => theme.colors.text};
 `;
 
 export const DateEpisode = styled.Text`
   font-size: 16px;
-
+  font-family: ${fonts.primary};
   margin-left: 20px;
 
   color: ${({theme}) => theme.colors.text};
@@ -34,4 +35,5 @@ export const DateEpisode = styled.Text`
 export const CodeEpisode = styled.Text`
   color: ${({theme}) => theme.colors.text};
   font-size: 16px;
+  font-family: ${fonts.primary};
 `;

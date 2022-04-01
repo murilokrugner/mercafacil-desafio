@@ -55,7 +55,7 @@ interface dataItemEpisodes {
     }
 }
 interface PostEpisodesProps {
-    order: string;
+    order: string | null;
     search: string;
   }
 

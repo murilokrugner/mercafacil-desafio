@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import fonts from '../../global/styles/fonts';
 
 export const Container = styled.View`
   flex-direction: column;
@@ -20,7 +21,7 @@ export const ContainerHeader = styled.View`
 export const TitleHeader = styled.Text`
   font-size: 24px;
   font-weight: bold;
-
+  font-family: ${fonts.bold};
   padding: 20px;
 
   color: ${({theme}) => theme.colors.text};

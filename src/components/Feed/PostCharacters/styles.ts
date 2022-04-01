@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import colors from '../../../global/styles/colors';
+import fonts from '../../../global/styles/fonts';
 
 export const Container = styled.View`
   padding: 10px;
@@ -51,7 +52,7 @@ export const ImagePost = styled.Image`
 export const Name = styled.Text`
   font-size: 24px;
   font-weight: bold;
-
+  font-family: ${fonts.bold};
   color: ${({theme}) => theme.colors.text};
 `;
 
@@ -82,13 +83,13 @@ export const ContainerInfo = styled.View`
 export const TitleInfo = styled.Text`
   font-size: 14px;
   font-weight: bold;
-
+  font-family: ${fonts.primary};
   color: ${({theme}) => theme.colors.text};
 `;
 
 export const TextInfo = styled.Text`
   font-size: 14px;
-
+  font-family: ${fonts.primary};
   margin-left: 5px;
 
   color: ${({theme}) => theme.colors.text};

@@ -13,7 +13,7 @@ interface charactersProps {
     characters: {
         id: number;
         name: string;
-        image: string;        
+        image: string;  
     }
 }
 

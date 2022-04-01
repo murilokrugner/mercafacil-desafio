@@ -16,8 +16,6 @@ import {
     TextInfo
 } from './styles';
 
-import rick from '../../../assets/rick.jpeg';
-
 import api from '../../../services/api';
 import listAllCharacters from '../../../queries/queryCharacter/listAllCharacters';
 import {orderName, orderStatus, orderSpecies} from '../../../functions/orderArray';
@@ -69,7 +67,7 @@ interface dataItemCharacter {
 }
 
 interface PostCharactersProps {
-  order: string;
+  order: string | null;
   search: string;
 }
 

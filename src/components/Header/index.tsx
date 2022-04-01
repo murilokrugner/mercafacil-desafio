@@ -1,13 +1,13 @@
-import React from 'react';
+import React, {Dispatch, SetStateAction } from 'react';
 import { Container, ContainerHeader, TitleHeader, ContainerInput } from './styles';
 import Input from '../Search/Input';
 import PickerFilter from '../Search/PickerFilter';
 
 interface HeaderProps {
     title: string;
-    setOrder: () => void;
-    setSearch: () => void;
-    itemsFilter: [];
+    setOrder?:  Dispatch<SetStateAction<null>> | Dispatch<SetStateAction<string>>;
+    setSearch?:  Dispatch<SetStateAction<string>> | any;
+    itemsFilter: {label: string, value: string}[];
 }
 
 const Header: React.FC<HeaderProps> = ({title, setOrder, setSearch, itemsFilter}) => {

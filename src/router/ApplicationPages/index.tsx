@@ -26,8 +26,8 @@ export default function ApplicationPages() {
 
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: 'tomato',
-          tabBarInactiveTintColor: 'gray',
+          tabBarActiveTintColor: '#4CCF80',
+          tabBarInactiveTintColor: '#44D4A6'
         })}
       >
         <Tab.Screen name="Personagens" component={Characters} 

@@ -15,6 +15,7 @@ LogBox.ignoreLogs([
 import './config/ReactotronConfig';
 
 const index: React.FC = () => {
+
   return (
       <ThemeProvider theme={theme}>        
         <StatusBar barStyle="dark-content" backgroundColor={theme.colors.primary} />

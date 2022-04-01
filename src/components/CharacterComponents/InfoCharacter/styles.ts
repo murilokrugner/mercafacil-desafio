@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import fonts from '../../../global/styles/fonts';
 
 export const Container = styled.View`
   height: 100%;
@@ -37,6 +38,8 @@ export const NameCharacter = styled.Text`
   margin-left: 20px;
 
   color: ${({theme}) => theme.colors.text};
+
+  font-family: ${fonts.bold};
 `;
 
 export const TitleInfoCharacter = styled.Text`
@@ -44,6 +47,8 @@ export const TitleInfoCharacter = styled.Text`
   margin-left: 20px;
 
   color: ${({theme}) => theme.colors.text};
+
+  font-family: ${fonts.primary};
 `;
 
 export const TextInfoCharacter = styled.Text`
@@ -53,4 +58,6 @@ export const TextInfoCharacter = styled.Text`
   margin-left: 25px;
 
   color: ${({theme}) => theme.colors.text};
+
+  font-family: ${fonts.primary};
 `;

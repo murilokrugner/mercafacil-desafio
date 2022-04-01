@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import fonts from '../../../global/styles/fonts';
 
 export const Container = styled.View`
   margin-top: 30px;
@@ -11,6 +12,8 @@ export const Title = styled.Text`
   font-weight: bold;
 
   color: ${({theme}) => theme.colors.text};
+
+  font-family: ${fonts.bold};
 `;
 
 export const ContainerCharacters = styled.View`
@@ -56,5 +59,7 @@ export const NameCharacter = styled.Text`
   text-align: center;
 
   margin-bottom: 10px;
+
+  font-family: ${fonts.primary};
 `;
 1

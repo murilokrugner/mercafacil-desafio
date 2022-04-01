@@ -1,13 +1,14 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, Dispatch} from 'react';
 import {StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import RNPickerSelect from 'react-native-picker-select';
 
 import { Container } from './styles';
+import { SetStateAction } from 'react';
 
 interface pickerProps {
-  setOrder: (value: string) => void;
-  itemsFilter: [];
+  setOrder?:  Dispatch<SetStateAction<null>> | Dispatch<SetStateAction<string>> | any;
+  itemsFilter: {label: string, value: string}[];
 }
 
 const PickerFilter: React.FC<pickerProps> = ({setOrder, itemsFilter}) => {

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import fonts from '../../../global/styles/fonts';
 
 export const TitleEpisodes = styled.Text`
   font-size: 24px;
@@ -8,6 +9,8 @@ export const TitleEpisodes = styled.Text`
   margin-left: 20px;
 
   color: ${({theme}) => theme.colors.text};
+
+  font-family: ${fonts.bold};
 `;
 
 export const ContainerEpisodes = styled.View`
@@ -40,4 +43,6 @@ export const Episode = styled.View`
 export const NameEpisode = styled.Text`
   font-size: 20px;
   color: #fff;
+
+  font-family: ${fonts.primary};
 `;
