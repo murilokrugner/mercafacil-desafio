@@ -17,6 +17,9 @@ import {
 import api from '../../../services/api';
 import listAllEpisodes from '../../../queries/queryEpisode/listAllEpisodes';
 import Loading from '../../Loading';
+
+import {orderName, orderAirDate} from '../../../functions/orderArray';
+
 interface dataEpisodes {
     data: {
         episodes: {
@@ -39,6 +42,7 @@ interface dataEpisodes {
         }
     }
 }
+
 interface dataItemEpisodes {
     id: number;
     name: string;
@@ -61,11 +65,20 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [loadingData, setLoadingData] = useState(false);
-
+  const [isSearch, setIsSearch] = useState(false);
+  const [isOrder, setIsOrder] = useState(false);
+  
     async function loadEpisodes() {
         if (loadingData) {
             return;
         }  
+
+        if (isSearch) {
+            setDatas([]);
+            setPage(1);
+            setIsSearch(false);
+        }
+
         try { 
             setLoadingData(true); 
 
@@ -81,14 +94,20 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
     }
 
     async function loadEpisodesSearch() { 
+        if (loadingData) {
+            return;
+        }  
+
         try { 
-            const response: dataEpisodes = await api(listAllEpisodes(page, `"${search}"`));             
+            setLoadingData(true);
+            setIsSearch(true);
             
-            setDatas(response.data.episodes.results);
+            const response: dataEpisodes = await api(listAllEpisodes(null, `"${search}"`));             
             
-            setLoading(false);
+            setDatas([...response.data.episodes.results]);
+            
+            setLoadingData(false);
         } catch (error) {          
-            setLoading(false);
         }        
     }
 
@@ -96,14 +115,36 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
         setPage(page + 1);
     }
 
+    function orderData() {
+        let data = datas;
+    
+        switch (order) {
+          case 'name':
+            setDatas(data.sort(orderName));
+            break;
+          case 'date':
+            setDatas(data.sort(orderAirDate));
+            break
+          default: 
+        }
+      }
+
     useEffect(() => {
-        if (search.length === 0) {            
-            loadEpisodes();
-        } else {
-            setPage(1);
+        if (search.length > 0) {            
             loadEpisodesSearch();
+        } else {
+            loadEpisodes();
         }
     }, [page, search]);
+
+    useEffect(() => {
+        if (order !== null) {
+          setIsOrder(true);
+          orderData();
+        } else {
+          setIsOrder(false);
+        }
+      }, [order]);
 
   return (
       <Container>

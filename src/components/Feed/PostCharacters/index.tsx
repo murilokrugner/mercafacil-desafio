@@ -22,6 +22,7 @@ import api from '../../../services/api';
 import listAllCharacters from '../../../queries/queryCharacter/listAllCharacters';
 import {orderName, orderStatus, orderSpecies} from '../../../functions/orderArray';
 import Loading from '../../Loading';
+
 interface dataCharacters {
     data: {
       characters: {
@@ -74,14 +75,23 @@ interface PostCharactersProps {
 
 const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
   const navigation = useNavigation();
+
   const [datas, setDatas] = useState<dataItemCharacter[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [loadingData, setLoadingData] = useState(false);
+  const [isSearch, setIsSearch] = useState(false);
+  const [isOrder, setIsOrder] = useState(false);
 
   async function loadCharacters() {
       if (loadingData) {
         return;
+      }
+
+      if (isSearch) {
+        setDatas([]);
+        setPage(1);
+        setIsSearch(false);
       }
 
       try {   
@@ -100,12 +110,19 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
   }
 
   async function loadCharactersSearch() {
+    if (isOrder) {
+      return;
+    }
+
     try {     
-      
+        setLoadingData(true);
+        setIsSearch(true);
+        
        const response: dataCharacters = await api(listAllCharacters(null, `"${search}"`));
 
-       setDatas(response.data.characters.results);
+       setDatas([...response.data.characters.results]);
 
+       setLoadingData(false);
       } catch (error) {          
 
     }
@@ -133,7 +150,7 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
   }
   
   useEffect(() => {
-    if (search.length !== 0) {
+    if (search.length > 0) {
       loadCharactersSearch();
     } else {
       loadCharacters();
@@ -144,7 +161,10 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
 
   useEffect(() => {
     if (order !== null) {
+      setIsOrder(true);
       orderData();
+    } else {
+      setIsOrder(false);
     }
   }, [order]);
   

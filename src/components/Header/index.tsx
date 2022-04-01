@@ -7,14 +7,15 @@ interface HeaderProps {
     title: string;
     setOrder: () => void;
     setSearch: () => void;
+    itemsFilter: [];
 }
 
-const Header: React.FC<HeaderProps> = ({title, setOrder, setSearch}) => {
+const Header: React.FC<HeaderProps> = ({title, setOrder, setSearch, itemsFilter}) => {
   return (
       <Container>
           <ContainerHeader>
             <TitleHeader>{title}</TitleHeader>
-            <PickerFilter setOrder={setOrder} />
+            <PickerFilter setOrder={setOrder} itemsFilter={itemsFilter} />
           </ContainerHeader>
 
           <ContainerInput>

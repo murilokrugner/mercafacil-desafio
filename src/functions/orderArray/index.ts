@@ -28,4 +28,14 @@ function orderSpecies(a: {species: string}, b: {species: string}) {
   return 0;
 }
 
-export {orderName, orderStatus, orderSpecies};
+function orderAirDate(a: {air_date: string}, b: {air_date: string}) {
+  if ( Date.parse(a.air_date) < Date.parse(b.air_date) ){
+    return -1;
+  }
+  if ( Date.parse(a.air_date) > Date.parse(b.air_date) ){
+    return 1;
+  }
+  return 0;
+}
+
+export {orderName, orderStatus, orderSpecies, orderAirDate};

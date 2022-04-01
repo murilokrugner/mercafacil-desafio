@@ -7,9 +7,10 @@ import { Container } from './styles';
 
 interface pickerProps {
   setOrder: (value: string) => void;
+  itemsFilter: [];
 }
 
-const PickerFilter: React.FC<pickerProps> = ({setOrder}) => {
+const PickerFilter: React.FC<pickerProps> = ({setOrder, itemsFilter}) => {
   const filter = useRef();
   
   const [selectFilter, setSelectFilter] = useState(null);
@@ -32,11 +33,7 @@ const PickerFilter: React.FC<pickerProps> = ({setOrder}) => {
             ref={el => {
               filter;
             }}
-            items={[
-                { label: 'Nome', value: 'name' },
-                { label: 'Status', value: 'status' },
-                { label: 'Espécie', value: 'species' },
-            ]}
+            items={itemsFilter}
         />
         <Icon name={'keyboard-arrow-down'} size={20} color="#000" />
     </Container>

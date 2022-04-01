@@ -34,9 +34,9 @@ export const ContainerStatus = styled.View`
 `;
 
 export const Name = styled.Text`
-  font-size: 17px;
+  font-size: 16px;
   font-weight: bold;
-
+  height: 20px;
   color: ${({theme}) => theme.colors.text};
 
 `;

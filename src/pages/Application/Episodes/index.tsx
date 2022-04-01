@@ -9,17 +9,22 @@ import PostEpisodes from '../../../components/Feed/PostEpisodes';
 const Episodes: React.FC = () => {
   const [order, setOrder] = useState(null);
   const [search, setSearch] = useState('');
+  const [itemsFilter, setItemsFilter] = useState([
+    { label: 'Nome', value: 'name' },
+    { label: 'Data', value: 'date' },
+  ]);
 
   return (
       <Container>
           <Header title={"Episódios"} 
              setOrder={setOrder} 
              setSearch={setSearch}
+             itemsFilter={itemsFilter}
           />
 
           <PostEpisodes 
              order={order}
-             search={search}
+             search={search}             
           />
       </Container>
   );
