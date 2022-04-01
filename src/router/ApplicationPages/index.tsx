@@ -14,9 +14,9 @@ export default function ApplicationPages() {
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
 
-          if (route.name === 'Personagens') {
+          if (route.name === 'Characters') {
             iconName = focused ? 'logo-octocat' : 'logo-octocat';
-          } else if (route.name === 'Episódios') {
+          } else if (route.name === 'Episodes') {
             iconName = focused ? 'library' : 'library-outline';
           }
 
@@ -26,13 +26,13 @@ export default function ApplicationPages() {
         tabBarInactiveTintColor: '#44D4A6',
       })}>
       <Tab.Screen
-        name="Personagens"
+        name="Characters"
         component={Characters}
         options={{headerShown: false}}
       />
 
       <Tab.Screen
-        name="Episódios"
+        name="Episodes"
         component={Episodes}
         options={{headerShown: false}}
       />

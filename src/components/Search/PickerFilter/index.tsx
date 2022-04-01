@@ -21,7 +21,7 @@ const PickerFilter: React.FC<pickerProps> = ({setOrder, itemsFilter}) => {
     <Container>
       <RNPickerSelect
         placeholder={{
-          label: 'Ordenar por: ',
+          label: 'Order by: ',
           value: null,
           color: '#fff',
         }}

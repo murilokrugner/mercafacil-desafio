@@ -37,7 +37,7 @@ const InfoEpisode: React.FC = () => {
           <CodeEpisode>{data.episode}</CodeEpisode>
         </ContainerNameEpisode>
 
-        <DateEpisode>No ar: {data.air_date}</DateEpisode>
+        <DateEpisode>Air Date: {data.air_date}</DateEpisode>
 
         <Line />
 

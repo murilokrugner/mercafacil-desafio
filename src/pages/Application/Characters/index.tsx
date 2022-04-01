@@ -9,15 +9,15 @@ const Characters: React.FC = () => {
   const [order, setOrder] = useState(null);
   const [search, setSearch] = useState('');
   const itemsFilter = [
-    {label: 'Nome', value: 'name'},
+    {label: 'Name', value: 'name'},
     {label: 'Status', value: 'status'},
-    {label: 'Espécie', value: 'species'},
+    {label: 'Specie', value: 'species'},
   ];
 
   return (
     <Container>
       <Header
-        title={'Personagens'}
+        title={'Characters'}
         setOrder={setOrder}
         setSearch={setSearch}
         itemsFilter={itemsFilter}

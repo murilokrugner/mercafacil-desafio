@@ -134,19 +134,25 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
     } catch (error) {}
   }, [search]);
 
-  const orderData = useCallback(() => {
+  const orderData = useCallback(() => {        
+    let newData = datas;
+    
     switch (order) {
       case 'name':
-        datas.sort(orderName);
+        newData.sort(orderName);
+        setDatas(newData);
         break;
       case 'status':
-        datas.sort(orderStatus);
+        newData.sort(orderStatus);
+        setDatas(newData);
         break;
       case 'species':
-        datas.sort(orderSpecies);
+        newData.sort(orderSpecies);
+        setDatas(newData);
         break;
       default:
     }
+
   }, [order]);
 
   function loadPage() {
@@ -165,7 +171,7 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
 
   useEffect(() => {
     if (order !== null) {
-      setIsOrder(true);
+      setIsOrder(true);      
       orderData();
     } else {
       setIsOrder(false);

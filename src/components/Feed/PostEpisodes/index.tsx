@@ -120,12 +120,16 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
   }
 
   const orderData = useCallback(() => {
+    let newData = datas;
+
     switch (order) {
       case 'name':
-        datas.sort(orderName);
+        newData.sort(orderName);
+        setDatas(newData);
         break;
       case 'date':
-        datas.sort(orderAirDate);
+        newData.sort(orderAirDate);
+        setDatas(newData);
         break;
       default:
     }
@@ -171,8 +175,8 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
                 </ContainerName>
 
                 <ContainerInfo>
-                  <TitleInfo>No ar: {item.air_date} </TitleInfo>
-                  <TitleInfo>Ver mais ➢</TitleInfo>
+                  <TitleInfo>Air Date: {item.air_date} </TitleInfo>
+                  <TitleInfo>View more ➢</TitleInfo>
                 </ContainerInfo>
               </ContainerInfoPost>
             </ContainerPost>

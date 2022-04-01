@@ -33,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({
           icon="search"
           autoCorrect={false}
           autoCapitalize="none"
-          placeholder="Pesquisa"
+          placeholder="Search"
           returnKeyType="next"
           setSearch={setSearch}
         />

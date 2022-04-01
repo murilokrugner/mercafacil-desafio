@@ -34,7 +34,7 @@ export default function ApplicationStackPages() {
           options={{
             headerShown: true,
             headerBackTitle: 'Voltar',
-            headerTitle: 'Informações do Personagem',
+            headerTitle: 'Character Information',
             headerTintColor: theme.colors.textInput,
             headerStyle: {
               backgroundColor: theme.colors.primary,
@@ -47,7 +47,7 @@ export default function ApplicationStackPages() {
           options={{
             headerShown: true,
             headerBackTitle: 'Voltar',
-            headerTitle: 'Informações do Episódio',
+            headerTitle: 'Episode Information',
             headerTintColor: theme.colors.textInput,
             headerStyle: {
               backgroundColor: theme.colors.primary,

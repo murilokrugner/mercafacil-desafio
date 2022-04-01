@@ -20,7 +20,7 @@ interface charactersProps {
 const CharactersEpisode: React.FC<charactersProps> = ({characters}) => {
   return (
     <Container>
-      <Title>Personagens do episódio: </Title>
+      <Title>Episode characters: </Title>
 
       <ContainerCharacters>
         {characters.map(item => (

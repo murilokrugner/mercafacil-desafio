@@ -47,6 +47,7 @@ export const ContainerName = styled.View`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+
   width: 320px;
   max-width: 320px;
   height: 32px;
@@ -56,6 +57,7 @@ export const ContainerInfo = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  
   width: 320px;
   height: 32px;
 `;
@@ -70,7 +72,7 @@ export const TitleInfo = styled.Text`
 export const TextInfo = styled.Text`
   font-size: 14px;
   font-family: ${fonts.primary};
-  margin-left: 5px;
 
+  margin-top: 5px;
   color: ${({theme}) => theme.colors.text};
 `;

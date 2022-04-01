@@ -16,7 +16,7 @@ interface episodesProps {
 const EpisodesChacacter: React.FC<episodesProps> = ({episodes}) => {
   return (
     <>
-      <TitleEpisodes>Episódios: </TitleEpisodes>
+      <TitleEpisodes>Episodes: </TitleEpisodes>
 
       <ContainerEpisodes>
         {episodes.map(item => (

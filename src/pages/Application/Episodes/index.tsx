@@ -9,14 +9,14 @@ const Episodes: React.FC = () => {
   const [order, setOrder] = useState(null);
   const [search, setSearch] = useState('');
   const itemsFilter = [
-    {label: 'Nome', value: 'name'},
-    {label: 'Data', value: 'date'},
+    {label: 'Name', value: 'name'},
+    {label: 'Date', value: 'date'},
   ];
 
   return (
     <Container>
       <Header
-        title={'Episódios'}
+        title={'Episodes'}
         setOrder={setOrder}
         setSearch={setSearch}
         itemsFilter={itemsFilter}
