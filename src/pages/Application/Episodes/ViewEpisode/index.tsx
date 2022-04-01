@@ -1,15 +1,14 @@
 import React from 'react';
-import { View } from 'react-native';
 import InfoEpisode from '../../../../components/EpisodesComponents/InfoEpisode';
 
-import { Container } from './styles';
+import {Container} from './styles';
 
 const ViewEpisode: React.FC = () => {
   return (
     <Container>
-        <InfoEpisode />
+      <InfoEpisode />
     </Container>
   );
-}
+};
 
 export default ViewEpisode;

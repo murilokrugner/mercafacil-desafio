@@ -4,10 +4,10 @@ import Routes from './routes';
 
 const App: React.FC = () => {
   return (
-      <SafeAreaView style={{flex: 1}}>
-        <Routes />
-      </SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
+      <Routes />
+    </SafeAreaView>
   );
-}
+};
 
 export default App;

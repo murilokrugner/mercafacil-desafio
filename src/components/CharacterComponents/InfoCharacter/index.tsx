@@ -1,19 +1,18 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
 
-import { 
-    Container, 
-    ImageCharacter, 
-    ContainerInfoCharacter, 
-    ContainerNameCharacter, 
-    NameCharacter,
-    TitleInfoCharacter,
-    TextInfoCharacter,
-     
+import {
+  ContainerScrollView,
+  Container,
+  ImageCharacter,
+  ContainerInfoCharacter,
+  ContainerNameCharacter,
+  NameCharacter,
+  TitleInfoCharacter,
+  TextInfoCharacter,
 } from './styles';
 
 import EpisodesChacacter from '../EpisodesChacacter';
-import { useRoute } from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 
 interface dataItemCharacter {
   id: number;
@@ -26,12 +25,11 @@ interface dataItemCharacter {
   };
   episode: [
     {
-      id: number,
+      id: number;
       name: string;
-    }
-  ]
+    },
+  ];
 }
-
 
 const InfoCharacter: React.FC = () => {
   const route = useRoute();
@@ -39,30 +37,30 @@ const InfoCharacter: React.FC = () => {
   const data: dataItemCharacter | any = route.params;
 
   return (
-    <ScrollView style={{height: '100%'}}>
+    <ContainerScrollView>
       <Container>
-          <ImageCharacter source={{uri: data.image}} />
-                    
-            <ContainerNameCharacter>
-              <NameCharacter>{data.name}</NameCharacter>
+        <ImageCharacter source={{uri: data.image}} />
 
-              <TextInfoCharacter>Alive - Alien</TextInfoCharacter>
-            </ContainerNameCharacter>
+        <ContainerNameCharacter>
+          <NameCharacter>{data.name}</NameCharacter>
 
-            <ContainerInfoCharacter>
-              <TitleInfoCharacter>Last known location:</TitleInfoCharacter>
-              <TextInfoCharacter>{data.location.name}</TextInfoCharacter>
-            </ContainerInfoCharacter>
+          <TextInfoCharacter>Alive - Alien</TextInfoCharacter>
+        </ContainerNameCharacter>
 
-            <ContainerInfoCharacter>
-              <TitleInfoCharacter>Last known location:</TitleInfoCharacter>
-              <TextInfoCharacter>{data.episode[0].name}</TextInfoCharacter>
-            </ContainerInfoCharacter>
+        <ContainerInfoCharacter>
+          <TitleInfoCharacter>Last known location:</TitleInfoCharacter>
+          <TextInfoCharacter>{data.location.name}</TextInfoCharacter>
+        </ContainerInfoCharacter>
 
-            <EpisodesChacacter episodes={data.episode}/>
-          </Container>
-      </ScrollView>
+        <ContainerInfoCharacter>
+          <TitleInfoCharacter>Last known location:</TitleInfoCharacter>
+          <TextInfoCharacter>{data.episode[0].name}</TextInfoCharacter>
+        </ContainerInfoCharacter>
+
+        <EpisodesChacacter episodes={data.episode} />
+      </Container>
+    </ContainerScrollView>
   );
-}
+};
 
 export default InfoCharacter;

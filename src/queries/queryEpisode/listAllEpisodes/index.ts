@@ -18,8 +18,8 @@ function listAllEpisodes(page: number | null, search: string | null) {
       },
     }
   }
-  `
+  `;
   return query;
-};
+}
 
 export default listAllEpisodes;

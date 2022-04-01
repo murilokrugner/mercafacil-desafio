@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import colors from '../../../global/styles/colors';
 import fonts from '../../../global/styles/fonts';
 
 export const Container = styled.View`
@@ -7,7 +6,6 @@ export const Container = styled.View`
 
   width: 100%;
   height: 100%;
-
 `;
 
 export const ContainerPost = styled.TouchableOpacity`
@@ -63,7 +61,6 @@ export const ContainerInfoPost = styled.View`
 
   width: 185px;
   height: 250px;
-
 `;
 
 export const ContainerName = styled.View`
@@ -72,12 +69,10 @@ export const ContainerName = styled.View`
   align-items: flex-start;
   width: auto;
   height: auto;
-
 `;
 
 export const ContainerInfo = styled.View`
   flex-direction: column;
-
 `;
 
 export const TitleInfo = styled.Text`

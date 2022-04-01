@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-import { 
-    Container, 
-    ContainerPost,
-    ContainerStatus,
-    Name, 
-    ContainerInfoPost,
-    ContainerName, 
-    ContainerInfo,
-    TitleInfo,
-    TextInfo
+import {
+  Container,
+  ContainerPost,
+  Name,
+  ContainerInfoPost,
+  ContainerName,
+  ContainerInfo,
+  TitleInfo,
+  TextInfo,
 } from './styles';
 
 import api from '../../../services/api';
@@ -21,43 +20,43 @@ import Loading from '../../Loading';
 import {orderName, orderAirDate} from '../../../functions/orderArray';
 
 interface dataEpisodes {
-    data: {
-        episodes: {
-            info: {
-                count: number;
-            },
-            results: [
-                {
-                    id: number;
-                    name: string;
-                    air_date: string;
-                    episode: string;
-                    characters: {
-                        id: number;
-                        name: string;
-                        image: string;
-                    }
-                }
-            ]
-        }
-    }
+  data: {
+    episodes: {
+      info: {
+        count: number;
+      };
+      results: [
+        {
+          id: number;
+          name: string;
+          air_date: string;
+          episode: string;
+          characters: {
+            id: number;
+            name: string;
+            image: string;
+          };
+        },
+      ];
+    };
+  };
 }
 
 interface dataItemEpisodes {
+  id: number;
+  name: string;
+  air_date: string;
+  episode: string;
+  characters: {
     id: number;
     name: string;
-    air_date: string;
-    episode: string;
-    characters: {
-      id: number;
-      name: string;
-      image: string;
-    }
+    image: string;
+  };
 }
 interface PostEpisodesProps {
-    order: string | null;
-    search: string;
-  }
+  order: string | null;
+  search: string;
+}
 
 const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
   const navigation = useNavigation();
@@ -67,120 +66,121 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
   const [loadingData, setLoadingData] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
   const [isOrder, setIsOrder] = useState(false);
-  
-    async function loadEpisodes() {
-        if (loadingData) {
-            return;
-        }  
 
-        if (isSearch) {
-            setDatas([]);
-            setPage(1);
-            setIsSearch(false);
-        }
-
-        try { 
-            setLoadingData(true); 
-
-            const response: dataEpisodes = await api(listAllEpisodes(page, null));             
-            
-            setDatas([...datas, ...response.data.episodes.results]);
-            
-            setLoading(false);
-            setLoadingData(false);
-        } catch (error) {          
-            setLoading(false);
-        }        
+  const loadEpisodes = useCallback(async () => {
+    if (loadingData) {
+      return;
     }
 
-    async function loadEpisodesSearch() { 
-        if (loadingData) {
-            return;
-        }  
-
-        try { 
-            setLoadingData(true);
-            setIsSearch(true);
-            
-            const response: dataEpisodes = await api(listAllEpisodes(null, `"${search}"`));             
-            
-            setDatas([...response.data.episodes.results]);
-            
-            setLoadingData(false);
-        } catch (error) {          
-        }        
+    if (isSearch) {
+      setDatas([]);
+      setPage(1);
+      setIsSearch(false);
     }
 
-    function loadPage() {
-        setPage(page + 1);
+    try {
+      setLoadingData(true);
+
+      const response: dataEpisodes = await api(listAllEpisodes(page, null));
+
+      setDatas([...datas, ...response.data.episodes.results]);
+
+      setLoading(false);
+      setLoadingData(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  }, [page]);
+
+  const loadEpisodesSearch = useCallback(async () => {
+    if (loadingData) {
+      return;
     }
 
-    function orderData() {
-        let data = datas;
-    
-        switch (order) {
-          case 'name':
-            setDatas(data.sort(orderName));
-            break;
-          case 'date':
-            setDatas(data.sort(orderAirDate));
-            break
-          default: 
-        }
-      }
+    if (isOrder) {
+      return;
+    }
 
-    useEffect(() => {
-        if (search.length > 0) {            
-            loadEpisodesSearch();
-        } else {
-            loadEpisodes();
-        }
-    }, [page, search]);
+    try {
+      setLoadingData(true);
+      setIsSearch(true);
 
-    useEffect(() => {
-        if (order !== null) {
-          setIsOrder(true);
-          orderData();
-        } else {
-          setIsOrder(false);
-        }
-      }, [order]);
+      const response: dataEpisodes = await api(
+        listAllEpisodes(null, `"${search}"`),
+      );
+
+      setDatas([...response.data.episodes.results]);
+
+      setLoadingData(false);
+    } catch (error) {}
+  }, [search]);
+
+  function loadPage() {
+    setPage(page + 1);
+  }
+
+  const orderData = useCallback(() => {
+    switch (order) {
+      case 'name':
+        datas.sort(orderName);
+        break;
+      case 'date':
+        datas.sort(orderAirDate);
+        break;
+      default:
+    }
+  }, [order]);
+
+  useEffect(() => {
+    if (search.length > 0) {
+      loadEpisodesSearch();
+    } else {
+      loadEpisodes();
+    }
+  }, [loadEpisodesSearch, loadEpisodes]);
+
+  useEffect(() => {
+    if (order !== null) {
+      setIsOrder(true);
+      orderData();
+    } else {
+      setIsOrder(false);
+    }
+  }, [orderData]);
 
   return (
-      <Container>
-          {loading ? (
-              <Loading color="#000" size="large" />
-          ) : (
-            <FlatList
-            showsVerticalScrollIndicator={false}
-            data={datas}        
-            onEndReached={loadPage}  
-            onEndReachedThreshold={0.5} 
-            style={{flex: 1}}
-            keyExtractor={(item) => String(item.id)}
-            renderItem={({item, index}) => (
-                <ContainerPost onPress={() => {navigation.navigate('ViewEpisode', item)}}>
+    <Container>
+      {loading ? (
+        <Loading color="#000" size="large" />
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={datas}
+          onEndReached={loadPage}
+          onEndReachedThreshold={0.5}
+          keyExtractor={item => String(item.id)}
+          renderItem={({item}) => (
+            <ContainerPost
+              onPress={() => {
+                navigation.navigate('ViewEpisode', item);
+              }}>
+              <ContainerInfoPost>
+                <ContainerName>
+                  <Name>{item.name}</Name>
+                  <TextInfo>{item.episode}</TextInfo>
+                </ContainerName>
 
-                    <ContainerInfoPost>                
-                        <ContainerName>
-                            <Name>{item.name}</Name>
-                            <TextInfo>{item.episode}</TextInfo>
-        
-                        </ContainerName>
-        
-                        <ContainerInfo>
-                            <TitleInfo>No ar: {item.air_date} </TitleInfo>
-                            <TitleInfo>Ver mais ➢</TitleInfo>
-                        </ContainerInfo>
-        
-                    </ContainerInfoPost>
-                </ContainerPost>
-            )}
+                <ContainerInfo>
+                  <TitleInfo>No ar: {item.air_date} </TitleInfo>
+                  <TitleInfo>Ver mais ➢</TitleInfo>
+                </ContainerInfo>
+              </ContainerInfoPost>
+            </ContainerPost>
+          )}
         />
-        )}
-        
-      </Container>
+      )}
+    </Container>
   );
-}
+};
 
 export default PostEpisodes;

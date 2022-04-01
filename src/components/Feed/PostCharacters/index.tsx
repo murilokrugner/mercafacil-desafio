@@ -1,69 +1,73 @@
-import React, {useEffect, useState} from 'react';
-import { FlatList } from 'react-native';
+import React, {useEffect, useState, useCallback} from 'react';
+import {FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-import { 
-    Container, 
-    ContainerPost,
-    ContainerTitlePost, 
-    ContainerStatus,
-    ImagePost, 
-    Name, 
-    ContainerInfoPost,
-    ContainerName, 
-    ContainerInfo,
-    TitleInfo,
-    TextInfo
+import {
+  Container,
+  ContainerPost,
+  ContainerTitlePost,
+  ContainerStatus,
+  ImagePost,
+  Name,
+  ContainerInfoPost,
+  ContainerName,
+  ContainerInfo,
+  TitleInfo,
+  TextInfo,
 } from './styles';
 
 import api from '../../../services/api';
 import listAllCharacters from '../../../queries/queryCharacter/listAllCharacters';
-import {orderName, orderStatus, orderSpecies} from '../../../functions/orderArray';
+import {
+  orderName,
+  orderStatus,
+  orderSpecies,
+} from '../../../functions/orderArray';
 import Loading from '../../Loading';
 
 interface dataCharacters {
-    data: {
-      characters: {
-        info: {
-          count: number;
-        },
-        results: [
-          {
-            id: number;
+  data: {
+    characters: {
+      info: {
+        count: number;
+      };
+      results: [
+        {
+          id: number;
+          name: string;
+          status: string;
+          species: string;
+          image: string;
+          location: {
             name: string;
-            status: string;
-            species: string;
-            image: string;
-            location: {
+          };
+          episode: [
+            {
+              id: number;
               name: string;
-            };
-            episode: [
-              {
-                id: number,
-                name: string;
-              }
-            ]
-          },
-        ]
-      }
-    }
+            },
+          ];
+        },
+      ];
+    };
+  };
 }
 
 interface dataItemCharacter {
-    id: number;
+  id: number;
+  name: string;
+  status: string;
+  species: string;
+  image: string;
+  location: {
     name: string;
-    status: string;
-    species: string;
-    image: string;
-    location: {
+  };
+  episode: [
+    {
+      id: number;
       name: string;
-    };
-    episode: [
-      {
-        id: number,
-        name: string;
-      }
-    ]
+    },
+  ];
 }
 
 interface PostCharactersProps {
@@ -81,72 +85,74 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
   const [isSearch, setIsSearch] = useState(false);
   const [isOrder, setIsOrder] = useState(false);
 
-  async function loadCharacters() {
-      if (loadingData) {
-        return;
-      }
+  const loadCharacters = useCallback(async () => {
+    if (loadingData) {
+      return;
+    }
 
-      if (isSearch) {
-        setDatas([]);
-        setPage(1);
-        setIsSearch(false);
-      }
+    if (isSearch) {
+      setDatas([]);
+      setPage(1);
+      setIsSearch(false);
+    }
 
-      try {   
-         setLoadingData(true);
+    try {
+      setLoadingData(true);
 
-         const response: dataCharacters = await api(listAllCharacters(page, null));         
+      const response: dataCharacters = await api(listAllCharacters(page, null));
 
-         setDatas([...datas, ...response.data.characters.results]);
+      setDatas([...datas, ...response.data.characters.results]);
 
-         setLoading(false);
-         setLoadingData(false);
-        } catch (error) {          
-          setLoading(false);
-          setLoadingData(false);
-      }
-  }
+      setLoading(false);
+      setLoadingData(false);
+    } catch (error) {
+      setLoading(false);
+      setLoadingData(false);
+    }
+  }, [page]);
 
-  async function loadCharactersSearch() {
+  const loadCharactersSearch = useCallback(async () => {
+    if (loadingData) {
+      return;
+    }
+
     if (isOrder) {
       return;
     }
 
-    try {     
-        setLoadingData(true);
-        setIsSearch(true);
-        
-       const response: dataCharacters = await api(listAllCharacters(null, `"${search}"`));
+    try {
+      setLoadingData(true);
+      setIsSearch(true);
 
-       setDatas([...response.data.characters.results]);
+      const response: dataCharacters = await api(
+        listAllCharacters(null, `"${search}"`),
+      );
 
-       setLoadingData(false);
-      } catch (error) {          
+      setDatas([...response.data.characters.results]);
 
-    }
-  }
+      setLoadingData(false);
+    } catch (error) {}
+  }, [search]);
 
-  function orderData() {
-    let data = datas;
-
+  const orderData = useCallback(() => {
     switch (order) {
       case 'name':
-        setDatas(data.sort(orderName));
+        datas.sort(orderName);
         break;
       case 'status':
-        setDatas(data.sort(orderStatus));
-        break
-      case 'species':
-        setDatas(data.sort(orderSpecies));
+        datas.sort(orderStatus);
         break;
-      default: 
+      case 'species':
+        datas.sort(orderSpecies);
+        break;
+      default:
     }
-  }
+  }, [order]);
 
   function loadPage() {
     setPage(page + 1);
   }
-  
+
   useEffect(() => {
     if (search.length > 0) {
       loadCharactersSearch();
@@ -154,8 +160,8 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
       loadCharacters();
     }
 
-    return () => {}
-  }, [page, search]);
+    return () => {};
+  }, [loadCharactersSearch, loadCharacters]);
 
   useEffect(() => {
     if (order !== null) {
@@ -164,52 +170,55 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
     } else {
       setIsOrder(false);
     }
-  }, [order]);
-  
+  }, [orderData]);
+
   return (
-      <Container>
-          {loading ? (
-              <Loading color="#000" size="large" />
-          ) : (
-              <FlatList
-                showsVerticalScrollIndicator={false}
-                data={datas}          
-                onEndReached={loadPage}
-                onEndReachedThreshold={5}   
-                style={{flex: 1}}
-                keyExtractor={(item) => String(item.id)}
-                renderItem={({item, index}) => (
-                <ContainerPost onPress={() => {navigation.navigate('ViewCharacter', item)}}>
-                    <ContainerTitlePost>
-                        <ImagePost source={{uri: item.image}}/>
-                    </ContainerTitlePost>
-    
-                    <ContainerInfoPost>                
-                        <ContainerName>
-                            <Name>{item.name}</Name>
-    
-                            <ContainerStatus>
-                                <TextInfo>{item.status} - {item.species}</TextInfo>
-                            </ContainerStatus>
-                        </ContainerName>
-    
-                        <ContainerInfo>
-                            <TitleInfo>Last known location:</TitleInfo>
-                            <TextInfo>{item.location.name}</TextInfo>
-                        </ContainerInfo>
-    
-                        <ContainerInfo>
-                            <TitleInfo>First seen in:</TitleInfo>
-                            <TextInfo>{item.episode[0].name}</TextInfo>
-                        </ContainerInfo>
-    
-                    </ContainerInfoPost>
-                </ContainerPost>
-                )}
-            />
-          )}        
-      </Container>
+    <Container>
+      {loading ? (
+        <Loading color="#000" size="large" />
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={datas}
+          onEndReached={loadPage}
+          onEndReachedThreshold={5}
+          keyExtractor={item => String(item.id)}
+          renderItem={({item}) => (
+            <ContainerPost
+              onPress={() => {
+                navigation.navigate('ViewCharacter', item);
+              }}>
+              <ContainerTitlePost>
+                <ImagePost source={{uri: item.image}} />
+              </ContainerTitlePost>
+
+              <ContainerInfoPost>
+                <ContainerName>
+                  <Name>{item.name}</Name>
+
+                  <ContainerStatus>
+                    <TextInfo>
+                      {item.status} - {item.species}
+                    </TextInfo>
+                  </ContainerStatus>
+                </ContainerName>
+
+                <ContainerInfo>
+                  <TitleInfo>Last known location:</TitleInfo>
+                  <TextInfo>{item.location.name}</TextInfo>
+                </ContainerInfo>
+
+                <ContainerInfo>
+                  <TitleInfo>First seen in:</TitleInfo>
+                  <TextInfo>{item.episode[0].name}</TextInfo>
+                </ContainerInfo>
+              </ContainerInfoPost>
+            </ContainerPost>
+          )}
+        />
+      )}
+    </Container>
   );
-}
+};
 
 export default PostCharacters;

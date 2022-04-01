@@ -5,6 +5,10 @@ export const Container = styled.View`
   height: 100%;
 `;
 
+export const ContainerScrollView = styled.ScrollView`
+  height: 100%;
+`;
+
 export const ImageCharacter = styled.Image`
   width: 100%;
   height: 250px;

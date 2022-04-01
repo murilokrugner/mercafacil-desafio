@@ -1,12 +1,11 @@
 import styled from 'styled-components/native';
-import colors from '../../../global/styles/colors';
 import fonts from '../../../global/styles/fonts';
 
 export const Container = styled.View`
-   padding: 10px;
+  padding: 10px;
 
-   width: 100%;
-   height: 100%;
+  width: 100%;
+  height: 100%;
 `;
 
 export const ContainerPost = styled.TouchableOpacity`
@@ -22,16 +21,6 @@ export const ContainerPost = styled.TouchableOpacity`
   width: 100%;
 
   margin-bottom: 30px;
-
-`;
-
-export const ContainerStatus = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  height: auto;
-  width: 100px;
 `;
 
 export const Name = styled.Text`
@@ -61,7 +50,6 @@ export const ContainerName = styled.View`
   width: 320px;
   max-width: 320px;
   height: 32px;
-
 `;
 
 export const ContainerInfo = styled.View`
@@ -70,7 +58,6 @@ export const ContainerInfo = styled.View`
   align-items: center;
   width: 320px;
   height: 32px;
-
 `;
 
 export const TitleInfo = styled.Text`

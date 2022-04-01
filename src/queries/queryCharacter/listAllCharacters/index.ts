@@ -21,8 +21,8 @@ function listAllCharacters(page: number | null, search: string | null) {
         }
       }
     }
-  `
+  `;
   return query;
-};
+}
 
 export default listAllCharacters;

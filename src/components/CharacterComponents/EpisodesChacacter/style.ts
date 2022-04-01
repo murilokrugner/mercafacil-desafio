@@ -37,7 +37,6 @@ export const Episode = styled.View`
   margin-bottom: 20px;
 
   padding: 10px;
-
 `;
 
 export const NameEpisode = styled.Text`

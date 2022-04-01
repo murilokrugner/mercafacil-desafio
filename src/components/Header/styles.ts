@@ -5,7 +5,6 @@ export const Container = styled.View`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-
 `;
 
 export const ContainerHeader = styled.View`
@@ -15,7 +14,6 @@ export const ContainerHeader = styled.View`
 
   width: 100%;
   height: 100px;
-
 `;
 
 export const TitleHeader = styled.Text`

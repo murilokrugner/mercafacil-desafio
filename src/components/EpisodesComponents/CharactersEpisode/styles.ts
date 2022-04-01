@@ -41,13 +41,11 @@ export const Character = styled.View`
   margin-bottom: 30px;
 
   border: 0.5px;
-
 `;
 
 export const ImageCharacter = styled.Image`
   width: 120px;
   height: 120px;
-
 `;
 
 export const NameCharacter = styled.Text`
@@ -62,4 +60,4 @@ export const NameCharacter = styled.Text`
 
   font-family: ${fonts.primary};
 `;
-1
+1;

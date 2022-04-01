@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Characters from '../../pages/Application/Characters';
@@ -9,32 +9,33 @@ const Tab = createBottomTabNavigator();
 
 export default function ApplicationPages() {
   return (
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
 
-            if (route.name === 'Personagens') {
-              iconName = focused
-                ? 'logo-octocat'
-                : 'logo-octocat';
-            } else if (route.name === 'Episódios') {
-              iconName = focused
-                ? 'library'
-                : 'library-outline';
-            }
+          if (route.name === 'Personagens') {
+            iconName = focused ? 'logo-octocat' : 'logo-octocat';
+          } else if (route.name === 'Episódios') {
+            iconName = focused ? 'library' : 'library-outline';
+          }
 
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: '#4CCF80',
-          tabBarInactiveTintColor: '#44D4A6'
-        })}
-      >
-        <Tab.Screen name="Personagens" component={Characters} 
-          options={{ headerShown: false }} />
-          
-        <Tab.Screen name="Episódios" component={Episodes} 
-          options={{ headerShown: false }} />
-      </Tab.Navigator>
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: '#4CCF80',
+        tabBarInactiveTintColor: '#44D4A6',
+      })}>
+      <Tab.Screen
+        name="Personagens"
+        component={Characters}
+        options={{headerShown: false}}
+      />
+
+      <Tab.Screen
+        name="Episódios"
+        component={Episodes}
+        options={{headerShown: false}}
+      />
+    </Tab.Navigator>
   );
 }
