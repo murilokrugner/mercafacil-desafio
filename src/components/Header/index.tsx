@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, ContainerHeader, TitleHeader } from './styles';
+import { Container, ContainerHeader, TitleHeader, ContainerInput } from './styles';
 import Input from '../Search/Input';
 import PickerFilter from '../Search/PickerFilter';
 
@@ -15,7 +15,15 @@ const Header: React.FC<HeaderProps> = ({title}) => {
             <PickerFilter />
           </ContainerHeader>
 
-          <Input />
+          <ContainerInput>
+            <Input 
+              icon="search"
+              autoCorrect={false}
+              autoCapitalize="none"
+              placeholder="Pesquisa"
+              returnKeyType="next"
+            />
+          </ContainerInput>
           
       </Container>
   );

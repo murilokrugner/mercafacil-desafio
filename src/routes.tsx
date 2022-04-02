@@ -1,11 +1,11 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import ApplicationPages from './router/ApplicationPages';
+import ApplicationStackPages from './router/ApplicationStackPages';
 
 export default function Routes() {
   return (
-    <NavigationContainer independent>
-      <ApplicationPages />
+    <NavigationContainer independent={true}>
+      <ApplicationStackPages />
     </NavigationContainer>
   );
 }

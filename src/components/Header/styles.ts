@@ -23,3 +23,14 @@ export const TitleHeader = styled.Text`
 
   padding: 20px;
 `;
+
+export const ContainerInput = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: auto;
+
+  margin-bottom: 20px;
+`;

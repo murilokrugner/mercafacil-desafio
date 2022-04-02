@@ -1,12 +1,9 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  width: 140px;
+  flex: 1;
+  width: auto;
   height: auto;
-
-  flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-
-  margin-right: 20px;
 `;

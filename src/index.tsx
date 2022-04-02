@@ -1,7 +1,9 @@
 import 'react-native-gesture-handler';
-import React from 'react';
-import GlobalStyleContext from './context/GlobalStyleContext';
 import {StatusBar, LogBox} from 'react-native';
+import React from 'react';
+
+import {ThemeProvider} from 'styled-components';
+
 import colors from './global/styles/colors';
 
 import App from './App';
@@ -12,11 +14,10 @@ LogBox.ignoreLogs([
 
 const index: React.FC = () => {
   return (
-      <GlobalStyleContext.Provider 
-        value={{colors: colors}}>
+      <ThemeProvider theme={colors}>        
         <StatusBar barStyle="dark-content" backgroundColor={colors.statusBar} />
         <App />
-      </GlobalStyleContext.Provider>
+      </ThemeProvider>
   );
 }
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -10,7 +9,6 @@ const Tab = createBottomTabNavigator();
 
 export default function ApplicationPages() {
   return (
-    <NavigationContainer independent={true}>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -38,6 +36,5 @@ export default function ApplicationPages() {
         <Tab.Screen name="Episódios" component={Episodes} 
           options={{ headerShown: false }} />
       </Tab.Navigator>
-    </NavigationContainer>
   );
 }

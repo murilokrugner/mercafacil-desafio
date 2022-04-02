@@ -1,35 +1,22 @@
-import React from 'react';
-import { Container } from './styles';
-import {TextInput} from 'react-native-paper';
-import {useContext} from 'react';
-import GlobalStyleContext from '../../../context/GlobalStyleContext';
+import React, { forwardRef} from 'react';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-interface globalStyles {
-  colors: {
-    primary: string;
-    text: string;
-  };
+import { Container, TInput } from './styles';
+
+interface InputProps {
+  style: object;
+  icon: string;
+  ref: string;
 }
 
-const Input: React.FC = () => {
-  const globalStyle : globalStyles = useContext(GlobalStyleContext);
-
+const Input: React.FC<InputProps> = ({ style, icon, ...rest }, ref) =>  {
   return (
-      <Container>
-        <TextInput
-            label="Pesquisa"
-            mode="outlined"   
-            theme={{
-              colors: {
-                placeholder: globalStyle.colors.text,
-                text: globalStyle.colors.text,
-                primary: globalStyle.colors.text,
-                background: globalStyle.colors.primary,
-              },
-            }}         
-        />
-      </Container>
+    <Container style={style}>
+      { icon && <Icon name={icon} size={20} color="#000" /> }
+      <TInput {...rest} ref={ref}/>
+    </Container>
   );
 }
 
-export default Input;
+
+export default forwardRef(Input);

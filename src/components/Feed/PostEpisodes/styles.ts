@@ -15,8 +15,9 @@ export const ContainerPost = styled.TouchableOpacity`
 
   background-color: ${({theme}) => theme.colors.primary};
 
-  height: 200px;
+  height: 100px;
   width: 100%;
+
 `;
 
 export const ContainerStatus = styled.View`
@@ -26,21 +27,6 @@ export const ContainerStatus = styled.View`
 
   height: auto;
   width: 100px;
-`;
-
-export const ContainerTitlePost = styled.View`
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-
-  height: 200px;
-`;
-
-export const ImagePost = styled.Image`
-  width: 185px;
-  height: 100%;
-
-  border-radius: 20px;
 `;
 
 export const Name = styled.Text`
@@ -55,21 +41,26 @@ export const ContainerInfoPost = styled.View`
   align-items: flex-start;
 
   width: 170px;
-  height: 200px;
+  height: 80px;
 
+  margin-left: 20px;
 `;
 
 export const ContainerName = styled.View`
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: auto;
-  height: auto;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 320px;
+  height: 32px;
 
 `;
 
 export const ContainerInfo = styled.View`
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 320px;
+  height: 32px;
 
 `;
 
