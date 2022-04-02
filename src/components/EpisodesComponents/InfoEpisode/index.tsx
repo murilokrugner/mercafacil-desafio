@@ -10,7 +10,7 @@ import {
 } from './styles';
 
 import CharactersEpisode from '../CharactersEpisode';
-import Line from '../../Line';
+import Separation from '../../Separation';
 import {useRoute} from '@react-navigation/native';
 interface dataItemEpisodes {
   id: number;
@@ -39,7 +39,7 @@ const InfoEpisode: React.FC = () => {
 
         <DateEpisode>Air Date: {data.air_date}</DateEpisode>
 
-        <Line />
+        <Separation />
 
         <CharactersEpisode characters={data.characters} />
       </Container>

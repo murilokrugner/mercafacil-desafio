@@ -1,8 +1,8 @@
 import React from 'react';
 import {Container} from './styles';
 
-const Line = () => {
+const Separation = () => {
   return <Container />;
 };
 
-export default Line;
+export default Separation;

@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {FlatList} from 'react-native';
+import {Alert, FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import {
@@ -81,66 +81,55 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
   const [datas, setDatas] = useState<dataItemCharacter[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [loadingData, setLoadingData] = useState(false);
-  const [isSearch, setIsSearch] = useState(false);
-  const [isOrder, setIsOrder] = useState(false);
 
   const loadCharacters = useCallback(async () => {
-    if (loadingData) {
-      return;
-    }
-
-    if (isSearch) {
-      setDatas([]);
-      setPage(1);
-      setIsSearch(false);
-    }
-
     try {
-      setLoadingData(true);
-
       const response: dataCharacters = await api(listAllCharacters(page, null));
 
       setDatas([...datas, ...response.data.characters.results]);
 
       setLoading(false);
-      setLoadingData(false);
     } catch (error) {
       setLoading(false);
-      setLoadingData(false);
     }
   }, [page]);
 
   const loadCharactersSearch = useCallback(async () => {
-    if (loadingData) {
-      return;
-    }
-
-    if (isOrder) {
-      return;
-    }
-
+    setLoading(true);
+    setDatas([]);
+    
     try {
-      setLoadingData(true);
-      setIsSearch(true);
-
       const response: dataCharacters = await api(
         listAllCharacters(null, `"${search}"`),
       );
 
       setDatas([...response.data.characters.results]);
 
-      setLoadingData(false);
-    } catch (error) {}
+      setLoading(false);
+
+    } catch (error) {
+      if (error) {
+        setLoading(false);
+        setDatas([]);
+        Alert.alert('Nenhum registro encontrado');        
+      }
+      
+    }
   }, [search]);
 
-  const orderData = useCallback(() => {        
+  const orderData = useCallback(() => { 
+    if (orderData === null) {
+      return
+    }  
+    
+    setLoading(true);     
+         
     let newData = datas;
     
     switch (order) {
       case 'name':
         newData.sort(orderName);
-        setDatas(newData);
+        setDatas(newData);        
         break;
       case 'status':
         newData.sort(orderStatus);
@@ -153,6 +142,8 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
       default:
     }
 
+    setLoading(false);
+    
   }, [order]);
 
   function loadPage() {
@@ -168,15 +159,6 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
 
     return () => {};
   }, [loadCharactersSearch, loadCharacters]);
-
-  useEffect(() => {
-    if (order !== null) {
-      setIsOrder(true);      
-      orderData();
-    } else {
-      setIsOrder(false);
-    }
-  }, [orderData]);
 
   return (
     <Container>

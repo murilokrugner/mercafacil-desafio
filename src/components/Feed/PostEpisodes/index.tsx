@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {FlatList} from 'react-native';
+import {Alert, FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import {
@@ -60,66 +60,51 @@ interface PostEpisodesProps {
 
 const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
   const navigation = useNavigation();
+
   const [datas, setDatas] = useState<dataItemEpisodes[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [loadingData, setLoadingData] = useState(false);
-  const [isSearch, setIsSearch] = useState(false);
-  const [isOrder, setIsOrder] = useState(false);
 
   const loadEpisodes = useCallback(async () => {
-    if (loadingData) {
-      return;
-    }
-
-    if (isSearch) {
-      setDatas([]);
-      setPage(1);
-      setIsSearch(false);
-    }
-
     try {
-      setLoadingData(true);
-
       const response: dataEpisodes = await api(listAllEpisodes(page, null));
 
       setDatas([...datas, ...response.data.episodes.results]);
 
       setLoading(false);
-      setLoadingData(false);
     } catch (error) {
       setLoading(false);
     }
   }, [page]);
 
   const loadEpisodesSearch = useCallback(async () => {
-    if (loadingData) {
-      return;
-    }
-
-    if (isOrder) {
-      return;
-    }
+    setLoading(true);
+    setDatas([]);
 
     try {
-      setLoadingData(true);
-      setIsSearch(true);
-
       const response: dataEpisodes = await api(
         listAllEpisodes(null, `"${search}"`),
       );
 
       setDatas([...response.data.episodes.results]);
 
-      setLoadingData(false);
-    } catch (error) {}
+      setLoading(false);
+    } catch (error) {
+      if (error) {
+        setLoading(false);
+        setDatas([]);
+        Alert.alert('Nenhum registro encontrado');        
+      }
+    }
   }, [search]);
 
-  function loadPage() {
-    setPage(page + 1);
-  }
-
   const orderData = useCallback(() => {
+    if (orderData === null) {
+      return
+    }  
+
+    setLoading(true);
+
     let newData = datas;
 
     switch (order) {
@@ -133,7 +118,14 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
         break;
       default:
     }
+
+    setLoading(false);
+
   }, [order]);
+
+  function loadPage() {
+    setPage(page + 1);
+  }
 
   useEffect(() => {
     if (search.length > 0) {
@@ -141,16 +133,9 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
     } else {
       loadEpisodes();
     }
-  }, [loadEpisodesSearch, loadEpisodes]);
 
-  useEffect(() => {
-    if (order !== null) {
-      setIsOrder(true);
-      orderData();
-    } else {
-      setIsOrder(false);
-    }
-  }, [orderData]);
+    return () => {};
+  }, [loadEpisodesSearch, loadEpisodes]);
 
   return (
     <Container>
