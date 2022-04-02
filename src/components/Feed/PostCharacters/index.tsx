@@ -117,13 +117,7 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
     }
   }, [search]);
 
-  const orderData = useCallback(() => { 
-    if (orderData === null) {
-      return
-    }  
-    
-    setLoading(true);     
-         
+  const orderData = useCallback(() => {          
     let newData = datas;
     
     switch (order) {
@@ -141,8 +135,6 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
         break;
       default:
     }
-
-    setLoading(false);
     
   }, [order]);
 
@@ -159,6 +151,13 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
 
     return () => {};
   }, [loadCharactersSearch, loadCharacters]);
+
+  useEffect(() => {
+    if (order !== null) {
+      orderData();
+      return;
+    }
+  }, [order]);
 
   return (
     <Container>

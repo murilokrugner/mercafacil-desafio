@@ -99,12 +99,6 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
   }, [search]);
 
   const orderData = useCallback(() => {
-    if (orderData === null) {
-      return
-    }  
-
-    setLoading(true);
-
     let newData = datas;
 
     switch (order) {
@@ -118,8 +112,6 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
         break;
       default:
     }
-
-    setLoading(false);
 
   }, [order]);
 
@@ -136,6 +128,13 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
 
     return () => {};
   }, [loadEpisodesSearch, loadEpisodes]);
+
+  useEffect(() => {
+    if (order !== null) {
+      orderData();
+      return;
+    }
+  }, [order]);
 
   return (
     <Container>
