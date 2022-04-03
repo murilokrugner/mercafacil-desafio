@@ -36,7 +36,7 @@ export const Character = styled.View`
   align-items: center;
 
   width: 120px;
-  height: 170px;
+  height: 190px;
 
   margin-bottom: 30px;
 
@@ -56,8 +56,8 @@ export const NameCharacter = styled.Text`
 
   text-align: center;
 
-  margin-bottom: 10px;
-
   font-family: ${fonts.primary};
+
+  margin-bottom: 20px;
 `;
 1;

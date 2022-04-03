@@ -8,10 +8,11 @@ interface InputProps {
   icon: string;
   ref: string;
   setSearch: (value: string) => void;
+  setFocusInput: (value: boolean) => void;
 }
 
 const Input: React.FC<InputProps> = (
-  {style, icon, setSearch, ...rest},
+  {style, icon, setSearch, setFocusInput, ...rest},
   ref,
 ) => {
   return (
@@ -21,7 +22,9 @@ const Input: React.FC<InputProps> = (
         {...rest}
         ref={ref}
         onChangeText={text => setSearch(text)}
-        defaultValue={''}
+        defaultValue={''}        
+        onFocus={() => {setFocusInput(true)}}
+        onEndEditing={() => {setFocusInput(false)}}
       />
     </Container>
   );

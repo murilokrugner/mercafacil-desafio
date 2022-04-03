@@ -73,9 +73,10 @@ interface dataItemCharacter {
 interface PostCharactersProps {
   order: string | null;
   search: string;
+  focusInput: boolean;
 }
 
-const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
+const PostCharacters: React.FC<PostCharactersProps> = ({order, search, focusInput}) => {
   const navigation = useNavigation();
 
   const [datas, setDatas] = useState<dataItemCharacter[]>([]);
@@ -83,6 +84,10 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
   const [loading, setLoading] = useState(true);
 
   const loadCharacters = useCallback(async () => {
+    if (search.length > 0) {
+        return
+    }
+
     try {
       const response: dataCharacters = await api(listAllCharacters(page, null));
 
@@ -94,28 +99,23 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
     }
   }, [page]);
 
-  const loadCharactersSearch = useCallback(async () => {
-    setLoading(true);
-    setDatas([]);
-    
+  const loadCharactersSearch = useCallback(async () => { 
     try {
       const response: dataCharacters = await api(
-        listAllCharacters(null, `"${search}"`),
+        listAllCharacters(page, `"${search}"`),
       );
 
-      setDatas([...response.data.characters.results]);
-
-      setLoading(false);
+      if (page > 1) {
+        setDatas([...datas, ...response.data.characters.results]);
+      } else {
+        setDatas([...response.data.characters.results]);
+      }
 
     } catch (error) {
-      if (error) {
-        setLoading(false);
-        setDatas([]);
-        Alert.alert('Nenhum registro encontrado');        
-      }
+      setDatas([]);
       
     }
-  }, [search]);
+  }, [page, search]);
 
   const orderData = useCallback(() => {          
     let newData = datas;
@@ -138,19 +138,23 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search}) => {
     
   }, [order]);
 
-  function loadPage() {
+  function loadPage() {    
     setPage(page + 1);
   }
 
   useEffect(() => {
-    if (search.length > 0) {
+    if (focusInput) {
+        setPage(1);
+    } 
+    
+    if (search.length > 0) {      
       loadCharactersSearch();
     } else {
       loadCharacters();
     }
 
     return () => {};
-  }, [loadCharactersSearch, loadCharacters]);
+  }, [loadCharactersSearch, loadCharacters, focusInput]);
 
   useEffect(() => {
     if (order !== null) {

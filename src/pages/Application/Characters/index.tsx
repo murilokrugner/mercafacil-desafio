@@ -8,6 +8,7 @@ import PostCharacters from '../../../components/Feed/PostCharacters';
 const Characters: React.FC = () => {
   const [order, setOrder] = useState(null);
   const [search, setSearch] = useState('');
+  const [focusInput, setFocusInput] = useState(false);
   const itemsFilter = [
     {label: 'Name', value: 'name'},
     {label: 'Status', value: 'status'},
@@ -20,10 +21,12 @@ const Characters: React.FC = () => {
         title={'Characters'}
         setOrder={setOrder}
         setSearch={setSearch}
+        setFocusInput={setFocusInput}
         itemsFilter={itemsFilter}
       />
 
-      <PostCharacters order={order} search={search} />
+      <PostCharacters order={order} search={search} 
+        focusInput={focusInput} />
     </Container>
   );
 };

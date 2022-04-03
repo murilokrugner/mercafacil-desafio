@@ -56,9 +56,10 @@ interface dataItemEpisodes {
 interface PostEpisodesProps {
   order: string | null;
   search: string;
+  focusInput: boolean;
 }
 
-const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
+const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search, focusInput}) => {
   const navigation = useNavigation();
 
   const [datas, setDatas] = useState<dataItemEpisodes[]>([]);
@@ -66,6 +67,10 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
   const [loading, setLoading] = useState(true);
 
   const loadEpisodes = useCallback(async () => {
+    if (search.length > 0) {
+        return
+    }
+
     try {
       const response: dataEpisodes = await api(listAllEpisodes(page, null));
 
@@ -78,25 +83,21 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
   }, [page]);
 
   const loadEpisodesSearch = useCallback(async () => {
-    setLoading(true);
-    setDatas([]);
-
     try {
       const response: dataEpisodes = await api(
-        listAllEpisodes(null, `"${search}"`),
+        listAllEpisodes(page, `"${search}"`),
       );
 
-      setDatas([...response.data.episodes.results]);
-
-      setLoading(false);
-    } catch (error) {
-      if (error) {
-        setLoading(false);
-        setDatas([]);
-        Alert.alert('Nenhum registro encontrado');        
+      if (page > 1) {
+        setDatas([...datas, ...response.data.episodes.results]);
+      } else {
+        setDatas([...response.data.episodes.results]);
       }
+
+    } catch (error) {
+      setDatas([]);
     }
-  }, [search]);
+  }, [page, search]);
 
   const orderData = useCallback(() => {
     let newData = datas;
@@ -120,6 +121,10 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
   }
 
   useEffect(() => {
+    if (focusInput) {
+        setPage(1);
+    } 
+
     if (search.length > 0) {
       loadEpisodesSearch();
     } else {
@@ -127,7 +132,7 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
     }
 
     return () => {};
-  }, [loadEpisodesSearch, loadEpisodes]);
+  }, [loadEpisodesSearch, loadEpisodes, focusInput]);
 
   useEffect(() => {
     if (order !== null) {
@@ -145,7 +150,7 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search}) => {
           showsVerticalScrollIndicator={false}
           data={datas}
           onEndReached={loadPage}
-          onEndReachedThreshold={0.5}
+          onEndReachedThreshold={5}
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => (
             <ContainerPost

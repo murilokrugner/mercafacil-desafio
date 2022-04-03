@@ -12,6 +12,7 @@ interface HeaderProps {
   title: string;
   setOrder?: Dispatch<SetStateAction<null>> | Dispatch<SetStateAction<string>>;
   setSearch?: Dispatch<SetStateAction<string>> | any;
+  setFocusInput?: Dispatch<SetStateAction<boolean>> | any;
   itemsFilter: {label: string; value: string}[];
 }
 
@@ -19,6 +20,7 @@ const Header: React.FC<HeaderProps> = ({
   title,
   setOrder,
   setSearch,
+  setFocusInput,
   itemsFilter,
 }) => {
   return (
@@ -36,6 +38,7 @@ const Header: React.FC<HeaderProps> = ({
           placeholder="Search"
           returnKeyType="next"
           setSearch={setSearch}
+          setFocusInput={setFocusInput}
         />
       </ContainerInput>
     </Container>

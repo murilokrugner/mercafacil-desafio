@@ -8,6 +8,7 @@ import PostEpisodes from '../../../components/Feed/PostEpisodes';
 const Episodes: React.FC = () => {
   const [order, setOrder] = useState(null);
   const [search, setSearch] = useState('');
+  const [focusInput, setFocusInput] = useState(false);
   const itemsFilter = [
     {label: 'Name', value: 'name'},
     {label: 'Date', value: 'date'},
@@ -19,10 +20,13 @@ const Episodes: React.FC = () => {
         title={'Episodes'}
         setOrder={setOrder}
         setSearch={setSearch}
+        setFocusInput={setFocusInput}
         itemsFilter={itemsFilter}
       />
 
-      <PostEpisodes order={order} search={search} />
+      <PostEpisodes order={order} search={search} 
+        focusInput={focusInput}
+      />
     </Container>
   );
 };
