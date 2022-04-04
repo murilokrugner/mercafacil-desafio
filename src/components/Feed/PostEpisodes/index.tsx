@@ -57,9 +57,10 @@ interface PostEpisodesProps {
   order: string | null;
   search: string;
   focusInput: boolean;
+  setFocusInput: (value: boolean) => void;
 }
 
-const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search, focusInput}) => {
+const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search, focusInput, setFocusInput}) => {
   const navigation = useNavigation();
 
   const [datas, setDatas] = useState<dataItemEpisodes[]>([]);
@@ -90,6 +91,7 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search, focusInput}) 
 
       if (page > 1) {
         setDatas([...datas, ...response.data.episodes.results]);
+        setFocusInput(false);
       } else {
         setDatas([...response.data.episodes.results]);
       }
@@ -132,7 +134,7 @@ const PostEpisodes: React.FC<PostEpisodesProps> = ({order, search, focusInput}) 
     }
 
     return () => {};
-  }, [loadEpisodesSearch, loadEpisodes, focusInput]);
+  }, [loadEpisodesSearch, loadEpisodes, focusInput, page]);
 
   useEffect(() => {
     if (order !== null) {

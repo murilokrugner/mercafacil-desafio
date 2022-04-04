@@ -74,9 +74,10 @@ interface PostCharactersProps {
   order: string | null;
   search: string;
   focusInput: boolean;
+  setFocusInput: (value: boolean) => void;
 }
 
-const PostCharacters: React.FC<PostCharactersProps> = ({order, search, focusInput}) => {
+const PostCharacters: React.FC<PostCharactersProps> = ({order, search, focusInput, setFocusInput}) => {
   const navigation = useNavigation();
 
   const [datas, setDatas] = useState<dataItemCharacter[]>([]);
@@ -107,6 +108,7 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search, focusInpu
 
       if (page > 1) {
         setDatas([...datas, ...response.data.characters.results]);
+        setFocusInput(false);
       } else {
         setDatas([...response.data.characters.results]);
       }
@@ -154,7 +156,7 @@ const PostCharacters: React.FC<PostCharactersProps> = ({order, search, focusInpu
     }
 
     return () => {};
-  }, [loadCharactersSearch, loadCharacters, focusInput]);
+  }, [loadCharactersSearch, loadCharacters, focusInput, page]);
 
   useEffect(() => {
     if (order !== null) {

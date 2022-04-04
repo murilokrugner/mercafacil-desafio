@@ -26,7 +26,9 @@ const Characters: React.FC = () => {
       />
 
       <PostCharacters order={order} search={search} 
-        focusInput={focusInput} />
+        focusInput={focusInput} 
+        setFocusInput={setFocusInput}
+        />
     </Container>
   );
 };

@@ -26,6 +26,7 @@ const Episodes: React.FC = () => {
 
       <PostEpisodes order={order} search={search} 
         focusInput={focusInput}
+        setFocusInput={setFocusInput}
       />
     </Container>
   );
